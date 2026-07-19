@@ -9,6 +9,13 @@ import shutil
 from pathlib import Path
 
 
+def copy_config_to_workdir(config_dir: str, workdir: str):
+    if not config_dir:
+        return
+    dest = os.path.join(workdir, ".opencode")
+    shutil.copytree(config_dir, dest, dirs_exist_ok=True)
+
+
 def run_task(
     task_id: str,
     trial: int,
@@ -45,6 +52,7 @@ def run_task(
         prompt = f"Fix the following issue in the codebase:\n\n{problem_statement}"
 
         if framework == "opencode-custom":
+            copy_config_to_workdir(config_dir, workdir)
             cmd = build_opencode_cmd(prompt, workdir, config_dir, model, agent)
         elif framework == "opencode-plain":
             cmd = build_opencode_plain_cmd(prompt, workdir, model, agent)
@@ -55,7 +63,7 @@ def run_task(
 
         env = os.environ.copy()
         if config_dir:
-            env["OPENCODE_CONFIG_DIR"] = config_dir
+            env["OPENCODE_CONFIG_DIR"] = os.path.join(workdir, ".opencode")
 
         timeout_seconds = timeout_minutes * 60
         proc = subprocess.run(
