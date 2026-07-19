@@ -49,6 +49,7 @@ jobs:
       - name: Select one task
         id: select
         run: |
+          mkdir -p results
           if [ -z "${{ github.event.inputs.task_id }}" ]; then
             python harness/select_tasks.py --n 1
           else

@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import random
 from datasets import load_dataset
 
@@ -7,6 +8,7 @@ from datasets import load_dataset
 def select_tasks(
     n: int = 20, seed: int = 42, output: str = "results/selected_tasks.json"
 ):
+    os.makedirs(os.path.dirname(output) or ".", exist_ok=True)
     ds = load_dataset("princeton-nlp/SWE-bench_Lite", split="test")
     rng = random.Random(seed)
     indices = list(range(len(ds)))
