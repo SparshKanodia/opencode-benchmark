@@ -1,0 +1,86 @@
+name: Dry Run — Single Task Validation
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_id:
+        description: "SWE-bench task ID (leave empty for random)"
+        required: false
+        type: string
+      model:
+        description: "Model to use"
+        default: "openrouter/deepseek-v4-flash"
+        required: false
+        type: string
+      framework:
+        description: "Framework to test"
+        default: "opencode-custom"
+        required: false
+        type: choice
+        options:
+          - opencode-custom
+          - opencode-plain
+          - aider
+
+env:
+  MODEL: ${{ github.event.inputs.model || 'openrouter/deepseek-v4-flash' }}
+  FRAMEWORK: ${{ github.event.inputs.framework || 'opencode-custom' }}
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nodejs npm
+      - name: Install OpenCode
+        if: ${{ startsWith(env.FRAMEWORK, 'opencode') }}
+        run: npm install -g @opencode-ai/opencode
+      - name: Install Aider
+        if: ${{ env.FRAMEWORK == 'aider' }}
+        run: pip install aider-chat
+      - name: Install Python deps
+        run: pip install -r harness/requirements.txt
+      - name: Select one task
+        id: select
+        run: |
+          if [ -z "${{ github.event.inputs.task_id }}" ]; then
+            python harness/select_tasks.py --n 1
+          else
+            echo '{"task_id": "${{ github.event.inputs.task_id }}"}' > results/selected_tasks.json
+          fi
+          TASK_ID=$(python3 -c "import json; print(json.load(open('results/selected_tasks.json'))[0]['task_id'])")
+          echo "task_id=$TASK_ID" >> $GITHUB_OUTPUT
+      - name: Run task
+        id: run
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
+          GITHUB_MCP_TOKEN: ${{ secrets.GITHUB_MCP_TOKEN }}
+          STITCH_API_KEY: ${{ secrets.STITCH_API_KEY }}
+        run: |
+          pip install -r harness/requirements.txt
+          python harness/run_task.py "${{ steps.select.outputs.task_id }}" \
+            --trial 1 \
+            --framework ${{ env.FRAMEWORK }} \
+            --config-dir ${{ github.workspace }}/configs \
+            --model "${{ github.event.inputs.model || 'openrouter/deepseek-v4-flash' }}" \
+            --agent coordinator \
+            --timeout 20 \
+            --output-dir results
+      - name: Show diff
+        if: always()
+        run: |
+          cat results/*.json | python3 -m json.tool
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dry-run-result
+          path: results/
