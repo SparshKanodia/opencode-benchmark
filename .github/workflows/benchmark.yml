@@ -71,7 +71,7 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq nodejs npm
       - name: Install OpenCode
-        run: npm install -g @opencode-ai/opencode
+        run: npm install -g opencode-ai
       - name: Install Python deps
         run: pip install -r harness/requirements.txt
       - name: Run task
