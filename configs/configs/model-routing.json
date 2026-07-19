@@ -1,0 +1,14 @@
+﻿{
+  "version": 1,
+  "kind": "model-routing",
+  "routes": {
+    "research": { "primary": "z-ai/glm-5.1", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "planning": { "primary": "z-ai/glm-5.1", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "architecture": { "primary": "deepseek-ai/deepseek-v4", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "implementation": { "primary": "deepseek-ai/deepseek-v4", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "review": { "primary": "meta/llama-3.3-70b-instruct", "fallback": "deepseek-ai/deepseek-v4" },
+    "qa": { "primary": "meta/llama-3.3-70b-instruct", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "documentation": { "primary": "z-ai/glm-5.1", "fallback": "deepseek-ai/deepseek-v4-lite" },
+    "coordination": { "primary": "deepseek-ai/deepseek-v4", "fallback": "deepseek-ai/deepseek-v4-lite" }
+  }
+}

@@ -1,0 +1,14 @@
+﻿{
+  "version": 1,
+  "kind": "workspace",
+  "workspace_name": "opencode-multi-agent-infrastructure",
+  "platform": "OpenCode 1.17+",
+  "provider": "NVIDIA NIM",
+  "os": "Windows 11",
+  "root_agent_set": ".\\agents",
+  "prompt_root": ".\\prompts",
+  "memory_root": ".\\memory",
+  "artifact_root": ".\\artifacts",
+  "log_root": ".\\logs",
+  "config_root": ".\\configs"
+}

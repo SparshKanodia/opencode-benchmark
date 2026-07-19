@@ -1,0 +1,17 @@
+﻿{
+  "version": 1,
+  "kind": "shared-memory",
+  "root": ".\\memory",
+  "namespaces": {
+    "shared": ".\\memory\\shared",
+    "research": ".\\memory\\research",
+    "architecture": ".\\memory\\architecture",
+    "implementation": ".\\memory\\implementation",
+    "qa": ".\\memory\\qa",
+    "docs": ".\\memory\\docs"
+  },
+  "retention": {
+    "policy": "manual",
+    "note": "Shared memory is persisted for future orchestration and agent context expansion."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "kind": "diary-policy",
+  "root": ".\\state\\diaries",
+  "project_layout": {
+    "project_directory": "{project}",
+    "index_file": "index.json",
+    "project_readme": "README.md",
+    "agent_journal": "agents/{agent}.md"
+  },
+  "entry_sections": [
+    "summary",
+    "reasoning",
+    "actions",
+    "artifacts",
+    "decisions",
+    "next_steps"
+  ],
+  "retention": {
+    "policy": "manual"
+  }
+}

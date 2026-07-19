@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "kind": "github-integration",
+  "enabled": false,
+  "poll_interval_seconds": 300,
+  "auto_task_labels": ["auto-task"],
+  "repos": [],
+  "default_priority": "normal",
+  "max_issues_per_poll": 5,
+  "issue_filters": {
+    "state": "open",
+    "labels": ["auto-task"],
+    "sort": "created",
+    "direction": "asc"
+  },
+  "pr_defaults": {
+    "base": "main",
+    "draft": false,
+    "auto_merge": false,
+    "reviewers": []
+  }
+}

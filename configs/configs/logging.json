@@ -1,0 +1,21 @@
+﻿{
+  "version": 1,
+  "kind": "logging",
+  "root": ".\\logs",
+  "files": {
+    "agent_events": ".\\logs\\agent-events.log",
+    "routing": ".\\logs\\model-routing.log",
+    "registry": ".\\logs\\registry.log",
+    "errors": ".\\logs\\errors.log",
+    "orchestration": ".\\logs\\orchestration.log"
+  },
+  "format": {
+    "type": "structured",
+    "preferred": "jsonl"
+  },
+  "levels": {
+    "default": "info",
+    "development": "debug",
+    "production": "info"
+  }
+}

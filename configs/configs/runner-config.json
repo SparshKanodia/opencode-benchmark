@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "kind": "runner-config",
+  "enabled": true,
+  "poll_interval_ms": 3000,
+  "max_concurrency": 1,
+  "claim_timeout_minutes": 5,
+  "retry_backoff_ms": 30000,
+  "inbox_root": ".\\state\\inboxes",
+  "diary_root": ".\\state\\diaries",
+  "archive_root": ".\\state\\handoffs",
+  "resume_on_start": true,
+  "force_fallback": false,
+  "fallback_mode": "smart",
+  "open_code_path": "opencode",
+  "opencode": {
+    "command": "opencode",
+    "run_agent_flag": "--agent",
+    "message_mode": "run",
+    "format": "default"
+  }
+}

@@ -1,0 +1,16 @@
+﻿{
+  "version": 1,
+  "kind": "agent-registry",
+  "default_agent": "coordinator",
+  "agents": {
+    "research": { "name": "Research Agent", "id": "research", "model": "z-ai/glm-5.1", "mode": "subagent", "description": "Information gathering and technical research.", "profile": "..\\agents\\research\\profile.md", "prompt": "..\\prompts\\agents\\research.md", "config": "..\\agents\\research\\agent.json" },
+    "pm": { "name": "Product Manager Agent", "id": "pm", "model": "deepseek-ai/deepseek-v4", "mode": "primary", "description": "Product definition, requirements, and roadmapping.", "profile": "..\\agents\\pm\\profile.md", "prompt": "..\\prompts\\agents\\pm.md", "config": "..\\agents\\pm\\agent.json" },
+    "architect": { "name": "System Architect Agent", "id": "architect", "model": "deepseek-ai/deepseek-v4", "mode": "subagent", "description": "Technical design, database design, and API design.", "profile": "..\\agents\\architect\\profile.md", "prompt": "..\\prompts\\agents\\architect.md", "config": "..\\agents\\architect\\agent.json" },
+    "backend": { "name": "Backend Developer Agent", "id": "backend", "model": "deepseek-ai/deepseek-v4", "mode": "subagent", "description": "Backend implementation, refactoring, and API work.", "profile": "..\\agents\\backend\\profile.md", "prompt": "..\\prompts\\agents\\backend.md", "config": "..\\agents\\backend\\agent.json" },
+    "frontend": { "name": "Frontend Developer Agent", "id": "frontend", "model": "deepseek-ai/deepseek-v4", "mode": "subagent", "description": "UI implementation, frontend architecture, and components.", "profile": "..\\agents\\frontend\\profile.md", "prompt": "..\\prompts\\agents\\frontend.md", "config": "..\\agents\\frontend\\agent.json" },
+    "reviewer": { "name": "Code Reviewer Agent", "id": "reviewer", "model": "meta/llama-3.3-70b-instruct", "mode": "subagent", "description": "Code, security, performance, and maintainability review.", "profile": "..\\agents\\reviewer\\profile.md", "prompt": "..\\prompts\\agents\\reviewer.md", "config": "..\\agents\\reviewer\\agent.json" },
+    "qa": { "name": "QA Agent", "id": "qa", "model": "meta/llama-3.3-70b-instruct", "mode": "subagent", "description": "Test planning, bug discovery, and regression coverage.", "profile": "..\\agents\\qa\\profile.md", "prompt": "..\\prompts\\agents\\qa.md", "config": "..\\agents\\qa\\agent.json" },
+    "docs": { "name": "Documentation Agent", "id": "docs", "model": "z-ai/glm-5.1", "mode": "subagent", "description": "Documentation, changelogs, READMEs, and knowledge base content.", "profile": "..\\agents\\docs\\profile.md", "prompt": "..\\prompts\\agents\\docs.md", "config": "..\\agents\\docs\\agent.json" },
+    "coordinator": { "name": "Project Coordinator Agent", "id": "coordinator", "model": "deepseek-ai/deepseek-v4", "mode": "primary", "description": "Project status tracking and task-state metadata.", "profile": "..\\agents\\coordinator\\profile.md", "prompt": "..\\prompts\\agents\\coordinator.md", "config": "..\\agents\\coordinator\\agent.json" }
+  }
+}

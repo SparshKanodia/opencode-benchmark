@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "kind": "schedule",
+  "enabled": false,
+  "poll_interval_seconds": 60,
+  "jobs": [
+    {
+      "name": "weekly-security-audit",
+      "schedule": "0 6 * * 1",
+      "title": "Weekly Security Audit",
+      "summary": "Automated weekly security audit. Review code for vulnerabilities, check dependencies, and generate a security report.",
+      "routed_agent": "reviewer",
+      "priority": "high",
+      "enabled": false
+    },
+    {
+      "name": "daily-code-qa",
+      "schedule": "0 8 * * 1-5",
+      "title": "Daily Code QA Review",
+      "summary": "Daily quality assurance pass. Review recent changes, run regression analysis, and verify test coverage.",
+      "routed_agent": "qa",
+      "priority": "normal",
+      "enabled": false
+    },
+    {
+      "name": "weekly-docs-sync",
+      "schedule": "0 9 * * 1",
+      "title": "Weekly Documentation Sync",
+      "summary": "Weekly documentation maintenance. Update changelog, verify README accuracy, and archive stale docs.",
+      "routed_agent": "docs",
+      "priority": "normal",
+      "enabled": false
+    }
+  ]
+}

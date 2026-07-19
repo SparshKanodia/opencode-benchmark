@@ -1,0 +1,124 @@
+name: SWE-bench Benchmark — OpenCode Custom Config
+
+on:
+  workflow_dispatch:
+    inputs:
+      n_tasks:
+        description: "Number of tasks to run"
+        default: "20"
+        required: false
+        type: string
+      model:
+        description: "Model to use (provider/model format)"
+        default: "openrouter/deepseek-v4-flash"
+        required: false
+        type: string
+      agent:
+        description: "Agent to use"
+        default: "coordinator"
+        required: false
+        type: string
+      timeout_minutes:
+        description: "Timeout per task in minutes"
+        default: "20"
+        required: false
+        type: string
+
+env:
+  MODEL: ${{ github.event.inputs.model || 'openrouter/deepseek-v4-flash' }}
+  AGENT: ${{ github.event.inputs.agent || 'coordinator' }}
+  TIMEOUT_MINUTES: ${{ github.event.inputs.timeout_minutes || '20' }}
+
+jobs:
+  select-tasks:
+    runs-on: ubuntu-latest
+    outputs:
+      task_matrix: ${{ steps.select.outputs.task_matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install datasets
+      - name: Select tasks
+        id: select
+        run: |
+          python harness/select_tasks.py --n ${{ github.event.inputs.n_tasks || '20' }}
+          TASKS=$(cat results/selected_tasks.json | jq -c '[.[].task_id]')
+          echo "task_matrix=$TASKS" >> $GITHUB_OUTPUT
+      - name: Upload task list
+        uses: actions/upload-artifact@v4
+        with:
+          name: selected-tasks
+          path: results/selected_tasks.json
+
+  run-task:
+    needs: select-tasks
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: ${{ fromJson(needs.select-tasks.outputs.task_matrix) }}
+        trial: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install system deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq nodejs npm
+      - name: Install OpenCode
+        run: npm install -g @opencode-ai/opencode
+      - name: Install Python deps
+        run: pip install -r harness/requirements.txt
+      - name: Run task
+        id: run
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+          CONTEXT7_API_KEY: ${{ secrets.CONTEXT7_API_KEY }}
+          GITHUB_MCP_TOKEN: ${{ secrets.GITHUB_MCP_TOKEN }}
+          STITCH_API_KEY: ${{ secrets.STITCH_API_KEY }}
+        run: |
+          python harness/run_task.py "${{ matrix.task }}" \
+            --trial ${{ matrix.trial }} \
+            --framework opencode-custom \
+            --config-dir ${{ github.workspace }}/configs \
+            --model openrouter/deepseek-v4-flash \
+            --agent coordinator \
+            --timeout 20 \
+            --output-dir results
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ matrix.task }}-t${{ matrix.trial }}
+          path: results/${{ matrix.task }}_t${{ matrix.trial }}_opencode-custom.json
+
+  aggregate:
+    needs: run-task
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Download all results
+        uses: actions/download-artifact@v4
+        with:
+          path: results/
+          pattern: result-*
+          merge-multiple: true
+      - name: Install deps
+        run: pip install -r harness/requirements.txt
+      - name: Aggregate
+        run: python harness/aggregate.py --results-dir results --output-dir results
+      - name: Upload summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary
+          path: results/summary.*

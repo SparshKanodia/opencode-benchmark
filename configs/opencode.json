@@ -1,0 +1,468 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [],
+  "default_agent": "coordinator",
+  "formatter": true,
+  "permission": {
+    "skill": {
+      "*": "allow"
+    },
+    "read": "allow",
+    "edit": "allow",
+    "bash": "allow"
+  },
+  "skills": {
+    "paths": [
+      "./skills"
+    ],
+    "registry": {
+      "deep-research": "./skills/deep-research/SKILL.md",
+      "verify": "./skills/verify/SKILL.md",
+      "code-review": "./skills/code-review/SKILL.md",
+      "simplify": "./skills/simplify/SKILL.md",
+      "memory": "./skills/memory/SKILL.md",
+      "workflow": "./skills/workflow/SKILL.md",
+      "graphify": "./skills/graphify/SKILL.md",
+      "frontend-design": "./skills/frontend-design/SKILL.md",
+      "frontend-review": "./skills/frontend-review/SKILL.md"
+    }
+  },
+  "instructions": [
+    "./instructions/global-system-prompt.md",
+    "./instructions/memory-system.md",
+    "./instructions/workflow-protocol.md",
+    "./instructions/plan-mode.md",
+    "./instructions/claude-design.md",
+    "./instructions/frontend-workflow.md"
+  ],
+  "provider": {
+    "nvidia": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "NVIDIA NIM",
+      "options": {
+        "baseURL": "https://integrate.api.nvidia.com/v1",
+        "apiKey": "{env:NVIDIA_API_KEY}"
+      },
+      "models": {
+        "deepseek-v4": {
+          "id": "deepseek-ai/deepseek-v4",
+          "name": "DeepSeek V4",
+          "family": "deepseek",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "deepseek-v4-lite": {
+          "id": "deepseek-ai/deepseek-v4-lite",
+          "name": "DeepSeek V4 Lite",
+          "family": "deepseek",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "glm-5.1": {
+          "id": "z-ai/glm-5.1",
+          "name": "GLM 5.1",
+          "family": "glm",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "llama-3.3-70b-instruct": {
+          "id": "meta/llama-3.3-70b-instruct",
+          "name": "Llama 3.3 70B Instruct",
+          "family": "llama",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        }
+      }
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "{env:OPENROUTER_API_KEY}"
+      },
+      "models": {
+        "free-router": {
+          "id": "openrouter/free",
+          "name": "Free Models Router",
+          "family": "openrouter",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "owl-alpha": {
+          "id": "openrouter/owl-alpha",
+          "name": "Owl Alpha",
+          "family": "openrouter",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true,
+          "vision": true
+        },
+        "deepseek-v4-flash": {
+          "id": "deepseek/deepseek-v4-flash:free",
+          "name": "DeepSeek V4 Flash (free)",
+          "family": "deepseek",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "deepseek-r1": {
+          "id": "deepseek/deepseek-r1:free",
+          "name": "DeepSeek R1 (free)",
+          "family": "deepseek",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "qwen3-coder": {
+          "id": "qwen/qwen3-coder:free",
+          "name": "Qwen 3 Coder (free)",
+          "family": "qwen",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "qwen3-235b": {
+          "id": "qwen/qwen3-235b-a22b:free",
+          "name": "Qwen 3 235B (free)",
+          "family": "qwen",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "nemotron-3-super": {
+          "id": "nvidia/nemotron-3-super-120b-a12b:free",
+          "name": "Nemotron 3 Super (free)",
+          "family": "nemotron",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "nemotron-3-ultra": {
+          "id": "nvidia/nemotron-3-ultra-550b-a55b:free",
+          "name": "Nemotron 3 Ultra (free)",
+          "family": "nemotron",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "nemotron-nano-omni": {
+          "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "name": "Nemotron Nano Omni (free)",
+          "family": "nemotron",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true,
+          "vision": true
+        },
+        "gemma-4-31b": {
+          "id": "google/gemma-4-31b-it:free",
+          "name": "Gemma 4 31B (free)",
+          "family": "gemma",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true,
+          "vision": true
+        },
+        "glm-5.1": {
+          "id": "z-ai/glm-5.1:free",
+          "name": "GLM 5.1 (free)",
+          "family": "glm",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "poolside-laguna-m1": {
+          "id": "poolside/laguna-m1:free",
+          "name": "Laguna M.1 (free)",
+          "family": "poolside",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "cohere-north-mini-code": {
+          "id": "cohere/north-mini-code:free",
+          "name": "North Mini Code (free)",
+          "family": "cohere",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "mistral-small-3.1": {
+          "id": "mistralai/mistral-small-3.1-24b-instruct:free",
+          "name": "Mistral Small 3.1 (free)",
+          "family": "mistral",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        },
+        "llama-3.1-70b": {
+          "id": "meta-llama/llama-3.1-70b-instruct:free",
+          "name": "Llama 3.1 70B (free)",
+          "family": "llama",
+          "reasoning": true,
+          "temperature": true,
+          "tool_call": true
+        }
+      }
+    }
+  },
+  "mcp": {
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": true,
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_MCP_TOKEN}"
+      }
+    },
+    "stitch": {
+      "type": "remote",
+      "url": "https://stitch.googleapis.com/mcp",
+      "enabled": true,
+      "headers": {
+        "X-Goog-Api-Key": "{env:STITCH_API_KEY}"
+      }
+    },
+    "oci-api": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-api-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": true
+    },
+    "oci-compute": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-compute-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-networking": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-networking-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-database": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-database-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-identity": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-identity-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-object-storage": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-object-storage-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-monitoring": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-monitoring-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-logging": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-logging-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-load-balancer": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-load-balancer-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-oke": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-containerengine-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-functions": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-faaas-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-pricing": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-pricing-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-usage": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-usage-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-cloud-guard": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-cloud-guard-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "oci-opensearch": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--python",
+        "3.13",
+        "oracle.oci-opensearch-mcp-server"
+      ],
+      "environment": {
+        "OCI_CONFIG_PROFILE": "DEFAULT",
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "enabled": false
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp"
+      ],
+      "enabled": true
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": true,
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
+    "docker": {
+      "type": "local",
+      "command": [
+        "docker",
+        "mcp"
+      ],
+      "enabled": true
+    }
+  }
+}

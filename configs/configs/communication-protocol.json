@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "kind": "communication-protocol",
+  "envelope": {
+    "fields": [
+      "task_id",
+      "source_agent",
+      "target_agent",
+      "intent",
+      "summary",
+      "artifacts",
+      "state",
+      "priority",
+      "timestamp"
+    ],
+    "required": [
+      "task_id",
+      "source_agent",
+      "target_agent",
+      "intent",
+      "summary",
+      "state",
+      "timestamp"
+    ]
+  },
+  "invocation": {
+    "syntax": "[INVOKE:agent_id|question]",
+    "chain_syntax": "[CHAIN:agent_a -> agent_b -> agent_c]"
+  },
+  "loop_prevention": {
+    "no_self_invocation": true,
+    "max_depth": 2,
+    "no_circular_calls": true
+  },
+  "responses": {
+    "syntax": "[RESPONSE:agent_id]",
+    "required_fields": [
+      "Key finding",
+      "Supporting data",
+      "Confidence",
+      "Caveat"
+    ]
+  }
+}
+

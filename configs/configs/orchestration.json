@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "kind": "orchestration-scaffold",
+  "enabled": true,
+  "controller": "coordinator",
+  "patterns": [
+    "router",
+    "orchestrator",
+    "evaluator"
+  ],
+  "phases": [
+    {
+      "id": "intake",
+      "description": "Normalize the request, capture scope, and identify the best first agent."
+    },
+    {
+      "id": "routing",
+      "description": "Select the primary and supporting agents using registry metadata and skill triggers."
+    },
+    {
+      "id": "handoff",
+      "description": "Serialize context into a handoff packet for the next agent."
+    },
+    {
+      "id": "execution-prep",
+      "description": "Prepare the execution packet and target state without running tasks yet."
+    },
+    {
+      "id": "verification",
+      "description": "Collect review, QA, and documentation outputs for readiness checks."
+    }
+  ],
+  "execution_contract": {
+    "description": "Declarative execution contract for the future autonomous runner.",
+    "claimable_states": [
+      "new",
+      "queued"
+    ],
+    "execution_state": "in_progress",
+    "handoff_state": "queued",
+    "review_states": [
+      "needs_review",
+      "verified"
+    ],
+    "terminal_states": [
+      "done"
+    ],
+    "guard_rails": {
+      "max_handoff_depth": 2,
+      "no_self_invocation": true,
+      "no_circular_chains": true,
+      "require_task_id": true,
+      "require_artifact_bounds": true,
+      "pause_on_file_approval": true
+    },
+    "handoff_artifacts": [
+      "summary.md",
+      "decision-log.md",
+      "context-package.json"
+    ],
+    "diary_artifacts": [
+      "state/diaries/{project}/{agent}.md",
+      "state/diaries/{project}/README.md",
+      "state/diaries/{project}/index.json"
+    ],
+    "review_artifacts": [
+      "review-notes.md",
+      "qa-notes.md",
+      "acceptance-checklist.md"
+    ]
+  },
+  "message_contract": {
+    "version": 1,
+    "schema": "configs/communication-protocol.json",
+    "fields": [
+      "task_id",
+      "source_agent",
+      "target_agent",
+      "intent",
+      "summary",
+      "artifacts",
+      "state",
+      "priority",
+      "timestamp"
+    ]
+  },
+  "task_states": [
+    "new",
+    "queued",
+    "in_progress",
+    "blocked",
+    "needs_review",
+    "verified",
+    "done"
+  ],
+  "command_entrypoints": [
+    "commands/orchestration/start.md",
+    "commands/orchestration/route.md",
+    "commands/orchestration/handoff.md",
+    "commands/orchestration/task-status.md",
+    "commands/orchestration/execute.md",
+    "commands/orchestration/review.md"
+  ],
+  "handoff_artifacts": [
+    "summary.md",
+    "decision-log.md",
+    "context-package.json"
+  ]
+}

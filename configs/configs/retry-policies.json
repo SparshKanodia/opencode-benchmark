@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "kind": "retry-policies",
+  "default": {
+    "max_attempts": 2,
+    "backoff_ms": 30000,
+    "escalation_state": "blocked"
+  },
+  "agents": {
+    "research": {
+      "max_attempts": 2,
+      "backoff_ms": 15000,
+      "escalation_state": "blocked"
+    },
+    "pm": {
+      "max_attempts": 1,
+      "backoff_ms": 15000,
+      "escalation_state": "blocked"
+    },
+    "architect": {
+      "max_attempts": 2,
+      "backoff_ms": 30000,
+      "escalation_state": "blocked"
+    },
+    "backend": {
+      "max_attempts": 3,
+      "backoff_ms": 30000,
+      "escalation_state": "blocked"
+    },
+    "frontend": {
+      "max_attempts": 3,
+      "backoff_ms": 30000,
+      "escalation_state": "blocked"
+    },
+    "reviewer": {
+      "max_attempts": 2,
+      "backoff_ms": 15000,
+      "escalation_state": "blocked"
+    },
+    "qa": {
+      "max_attempts": 2,
+      "backoff_ms": 15000,
+      "escalation_state": "blocked"
+    },
+    "docs": {
+      "max_attempts": 2,
+      "backoff_ms": 15000,
+      "escalation_state": "blocked"
+    },
+    "coordinator": {
+      "max_attempts": 1,
+      "backoff_ms": 10000,
+      "escalation_state": "blocked"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "kind": "task-store",
+  "root": ".\\state",
+  "tasks_file": ".\\state\\tasks.json",
+  "handoff_dir": ".\\state\\handoffs",
+  "history_dir": ".\\state\\history",
+  "inbox_dir": ".\\state\\inboxes",
+  "diary_dir": ".\\state\\diaries",
+  "states": [
+    "new",
+    "queued",
+    "in_progress",
+    "blocked",
+    "needs_review",
+    "verified",
+    "done"
+  ],
+  "default_priority": "normal",
+  "claim_timeout_minutes": 5,
+  "retry_backoff_ms": 30000,
+  "retention": {
+    "handoff_history_days": 30,
+    "task_history_days": 90
+  }
+}
